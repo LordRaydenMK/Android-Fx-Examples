@@ -3,6 +3,7 @@
     package="io.github.lordraydenmk.android_fx">
 
     <application
+        android:name=".AndroidFxApp"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"

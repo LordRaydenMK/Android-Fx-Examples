@@ -57,6 +57,8 @@ dependencies {
     implementation "io.arrow-kt:arrow-fx:$arrow_version"
     implementation "io.arrow-kt:arrow-fx-kotlinx-coroutines:$arrow_version"
 
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+
     testImplementation 'junit:junit:4.13'
     testImplementation "androidx.arch.core:core-testing:$arch_version"
     testImplementation 'com.jraska.livedata:testing-ktx:1.1.2'
