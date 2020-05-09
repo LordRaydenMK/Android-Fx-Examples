@@ -11,6 +11,7 @@ import io.github.lordraydenmk.android_fx.example03.ConcurrentApiCallsActivity
 import io.github.lordraydenmk.android_fx.example04.MultipleNetworkRequestsActivity
 import io.github.lordraydenmk.android_fx.example05.RequestWithTimeoutActivity
 import io.github.lordraydenmk.android_fx.example06.RetryingActivity
+import io.github.lordraydenmk.android_fx.example07.RetryAndTimeoutActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 data class ArrowAndroidExample(
@@ -24,7 +25,8 @@ val allExamples = listOf(
     ArrowAndroidExample(R.string.example03, ConcurrentApiCallsActivity::class.java),
     ArrowAndroidExample(R.string.example04, MultipleNetworkRequestsActivity::class.java),
     ArrowAndroidExample(R.string.example05, RequestWithTimeoutActivity::class.java),
-    ArrowAndroidExample(R.string.example06, RetryingActivity::class.java)
+    ArrowAndroidExample(R.string.example06, RetryingActivity::class.java),
+    ArrowAndroidExample(R.string.example07, RetryAndTimeoutActivity::class.java)
 )
 
 class MainActivity : AppCompatActivity() {

@@ -2,8 +2,8 @@ package io.github.lordraydenmk.android_fx.example01
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.jraska.livedata.test
-import io.github.lordraydenmk.android_fx.data.Model
 import io.github.lordraydenmk.android_fx.fakes.errorService
+import io.github.lordraydenmk.android_fx.fakes.repositoryDto
 import io.github.lordraydenmk.android_fx.fakes.successService
 import io.github.lordraydenmk.android_fx.view.ViewState
 import org.junit.Rule
@@ -25,7 +25,7 @@ class SingleApiCallViewModelTest {
             .awaitNextValue()
             .assertValueHistory(
                 ViewState.Loading,
-                ViewState.Content(Model(id, "Model"))
+                ViewState.Content(repositoryDto(id, "Model"))
             )
     }
 
@@ -38,7 +38,7 @@ class SingleApiCallViewModelTest {
             .awaitNextValue()
             .assertValueHistory(
                 ViewState.Loading,
-                ViewState.Error("Bang!")
+                ViewState.Error("Bang!\n\nTap here to retry!")
             )
     }
 }

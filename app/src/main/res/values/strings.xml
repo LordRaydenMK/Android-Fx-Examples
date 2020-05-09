@@ -1,9 +1,11 @@
 <resources>
     <string name="app_name">Android-Fx</string>
+    <string name="logo">Logo</string>
     <string name="example01">Single API call</string>
     <string name="example02">Sequential API calls</string>
     <string name="example03">Concurrent API calls</string>
     <string name="example04">Multiple API calls</string>
     <string name="example05">API call with timeout</string>
     <string name="example06">Retrying on error</string>
+    <string name="example07">Retrying plus Timeout</string>
 </resources>
