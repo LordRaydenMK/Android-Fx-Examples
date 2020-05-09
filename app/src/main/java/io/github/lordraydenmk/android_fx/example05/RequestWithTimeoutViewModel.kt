@@ -8,12 +8,11 @@ import arrow.fx.IO
 import arrow.fx.extensions.fx
 import arrow.fx.handleError
 import arrow.fx.typeclasses.Duration
+import arrow.fx.typeclasses.seconds
 import arrow.integrations.kotlinx.unsafeRunScoped
 import io.github.lordraydenmk.android_fx.data.ApiService
 import io.github.lordraydenmk.android_fx.data.Model
 import io.github.lordraydenmk.android_fx.view.ViewState
-import java.util.concurrent.TimeUnit
-import kotlin.random.Random
 
 class RequestWithTimeoutViewModel(
     private val service: ApiService = ApiService.create(errorProbability = 15)
@@ -27,18 +26,13 @@ class RequestWithTimeoutViewModel(
         execute()
     }
 
-    fun execute() {
+    fun execute(timeout: Duration = 1.seconds) {
         IO.fx {
             effect { _viewState.postValue(ViewState.Loading) }.bind()
-            val race = IO.raceN(
-                effect { service.getModel() },
-                // random number 1-4 -> 33.33% timeout probability
-                IO.sleep(Duration(Random.nextLong(3) + 1, TimeUnit.SECONDS))
-            ).bind()
-            race.fold(
-                { ViewState.Content(it) },
-                { ViewState.Error("Timeout :(") }
-            )
+            val model = effect { service.getModel() }
+                .waitFor(timeout)
+                .bind()
+            ViewState.Content(model)
         }
             .handleError { ViewState.Error(it.message ?: "Bang!") }
             .unsafeRunScoped(viewModelScope) { result ->
