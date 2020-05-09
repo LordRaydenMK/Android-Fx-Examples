@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import arrow.fx.IO
 import arrow.fx.IO.Companion.effect
 import arrow.fx.extensions.fx
-import arrow.fx.handleErrorWith
+import arrow.fx.handleError
 import arrow.integrations.kotlinx.unsafeRunScoped
 import io.github.lordraydenmk.android_fx.data.ApiService
 import io.github.lordraydenmk.android_fx.data.Model
@@ -28,14 +28,12 @@ class SingleApiCallViewModel(private val service: ApiService = ApiService.create
         IO.fx {
             effect { _viewState.postValue(ViewState.Loading) }.bind()
             continueOn(Dispatchers.IO)
-            val model = effect { service.getModel() }.bind()
+            val model: Model = effect { service.getModel() }.bind()
             continueOn(Dispatchers.Default)
-            val success = ViewState.Content(model)
-            effect { _viewState.postValue(success) }.bind()
+            ViewState.Content(model)
         }
-            .handleErrorWith {
-                effect { _viewState.postValue(ViewState.Error(it.message ?: "Ooops")) }
-            }
+            .handleError { ViewState.Error(it.message ?: "Ooops") }
+            .flatMap { effect { _viewState.postValue(it) } }
             .unsafeRunScoped(viewModelScope) {}
     }
 
@@ -47,10 +45,8 @@ class SingleApiCallViewModel(private val service: ApiService = ApiService.create
             .flatMap { effect { service.getModel() } }
             .continueOn(Dispatchers.Default)
             .map { ViewState.Content(it) }
+            .handleError { ViewState.Error(it.message ?: "Ooops") }
             .flatMap { effect { _viewState.postValue(it) } }
-            .handleErrorWith {
-                effect { _viewState.postValue(ViewState.Error(it.message ?: "Ooops")) }
-            }
             .unsafeRunScoped(viewModelScope) { }
     }
 
@@ -62,10 +58,8 @@ class SingleApiCallViewModel(private val service: ApiService = ApiService.create
             .continueOn(Dispatchers.Default)
             .map { ViewState.Content(it) }
             .continueOn(Dispatchers.Main)
+            .handleError { ViewState.Error(it.message ?: "Ooops") }
             .flatMap { effect { _viewState.value = it } }
-            .handleErrorWith {
-                effect { _viewState.value = ViewState.Error(it.message ?: "Ooops") }
-            }
             .unsafeRunScoped(viewModelScope) { }
     }
 }
