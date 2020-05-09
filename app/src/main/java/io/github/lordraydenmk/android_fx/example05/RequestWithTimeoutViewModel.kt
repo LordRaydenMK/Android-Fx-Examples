@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import arrow.fx.IO
+import arrow.fx.IO.Companion.effect
 import arrow.fx.extensions.fx
 import arrow.fx.handleError
 import arrow.fx.typeclasses.Duration
@@ -13,6 +14,7 @@ import arrow.integrations.kotlinx.unsafeRunScoped
 import io.github.lordraydenmk.android_fx.data.GithubService
 import io.github.lordraydenmk.android_fx.data.RepositoryDto
 import io.github.lordraydenmk.android_fx.view.ViewState
+import io.github.lordraydenmk.android_fx.view.errorMessage
 
 class RequestWithTimeoutViewModel(
     private val service: GithubService = GithubService.create(errorProbability = 15)
@@ -34,9 +36,8 @@ class RequestWithTimeoutViewModel(
                 .bind()
             ViewState.Content(model)
         }
-            .handleError { ViewState.Error(it.message ?: "Bang!") }
-            .unsafeRunScoped(viewModelScope) { result ->
-                result.fold({}, { _viewState.postValue(it) })
-            }
+            .handleError { ViewState.Error(it.errorMessage()) }
+            .flatMap { effect { _viewState.postValue(it) } }
+            .unsafeRunScoped(viewModelScope) { }
     }
 }

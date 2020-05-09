@@ -22,7 +22,7 @@ class RequestWithTimeoutViewModelTest {
             .awaitNextValue()
             .assertValueHistory(
                 ViewState.Loading,
-                ViewState.Error("Duration(amount=1, timeUnit=SECONDS)") // timeout was set to 1s in the VM
+                ViewState.Error("Duration(amount=1, timeUnit=SECONDS)\n\nTap here to retry!") // timeout was set to 1s in the VM
             )
     }
 }

@@ -39,7 +39,7 @@ internal class SequentialApiCallsViewModelTest {
             .awaitNextValue()
             .assertValueHistory(
                 ViewState.Loading,
-                ViewState.Error("Bang!")
+                ViewState.Error("Bang!\n\nTap here to retry!")
             )
     }
 }

@@ -6,12 +6,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import arrow.core.Tuple3
 import arrow.fx.IO
+import arrow.fx.IO.Companion.effect
 import arrow.fx.extensions.fx
 import arrow.fx.handleError
 import arrow.integrations.kotlinx.unsafeRunScoped
 import io.github.lordraydenmk.android_fx.data.GithubService
 import io.github.lordraydenmk.android_fx.data.RepositoryDto
 import io.github.lordraydenmk.android_fx.view.ViewState
+import io.github.lordraydenmk.android_fx.view.errorMessage
 import kotlinx.coroutines.Dispatchers
 
 class ConcurrentApiCallsViewModel(
@@ -40,8 +42,7 @@ class ConcurrentApiCallsViewModel(
         ).bind()
         ViewState.Content(results.b)    // I'm picking the 2nd result because why not
     }
-        .handleError { ViewState.Error(it.message ?: "Bang!") }
-        .unsafeRunScoped(viewModelScope) { result ->
-            result.fold({}, { _viewState.postValue(it) })
-        }
+        .handleError { ViewState.Error(it.errorMessage()) }
+        .flatMap { effect { _viewState.postValue(it) } }
+        .unsafeRunScoped(viewModelScope) { }
 }
