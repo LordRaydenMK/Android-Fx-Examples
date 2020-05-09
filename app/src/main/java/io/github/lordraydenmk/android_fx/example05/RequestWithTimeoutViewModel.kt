@@ -10,16 +10,16 @@ import arrow.fx.handleError
 import arrow.fx.typeclasses.Duration
 import arrow.fx.typeclasses.seconds
 import arrow.integrations.kotlinx.unsafeRunScoped
-import io.github.lordraydenmk.android_fx.data.ApiService
-import io.github.lordraydenmk.android_fx.data.Model
+import io.github.lordraydenmk.android_fx.data.GithubService
+import io.github.lordraydenmk.android_fx.data.RepositoryDto
 import io.github.lordraydenmk.android_fx.view.ViewState
 
 class RequestWithTimeoutViewModel(
-    private val service: ApiService = ApiService.create(errorProbability = 15)
+    private val service: GithubService = GithubService.create(errorProbability = 15)
 ) : ViewModel() {
 
-    private val _viewState = MutableLiveData<ViewState<Model>>()
-    val viewState: LiveData<ViewState<Model>>
+    private val _viewState = MutableLiveData<ViewState<RepositoryDto>>()
+    val viewState: LiveData<ViewState<RepositoryDto>>
         get() = _viewState
 
     init {
@@ -29,7 +29,7 @@ class RequestWithTimeoutViewModel(
     fun execute(timeout: Duration = 1.seconds) {
         IO.fx {
             effect { _viewState.postValue(ViewState.Loading) }.bind()
-            val model = effect { service.getModel() }
+            val model = effect { service.getRepository() }
                 .waitFor(timeout)
                 .bind()
             ViewState.Content(model)

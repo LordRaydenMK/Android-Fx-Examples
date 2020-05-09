@@ -14,8 +14,8 @@ class RequestWithTimeoutViewModelTest {
     val rule = InstantTaskExecutorRule()
 
     @Test
-    fun `viewState - request timeout - Loading then timeout Error`() {
-        val viewModel = RequestWithTimeoutViewModel(successService(UUID.randomUUID(), 1001))
+    fun `viewState - request is delayed 1s or longer - Loading then timeout Error`() {
+        val viewModel = RequestWithTimeoutViewModel(successService(UUID.randomUUID(), 1005))
 
         viewModel.viewState
             .test()

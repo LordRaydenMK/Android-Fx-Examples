@@ -12,18 +12,18 @@ import arrow.fx.extensions.io.applicative.applicative
 import arrow.fx.fix
 import arrow.fx.handleError
 import arrow.integrations.kotlinx.unsafeRunScoped
-import io.github.lordraydenmk.android_fx.data.ApiService
-import io.github.lordraydenmk.android_fx.data.Model
+import io.github.lordraydenmk.android_fx.data.GithubService
+import io.github.lordraydenmk.android_fx.data.RepositoryDto
 import io.github.lordraydenmk.android_fx.view.ViewState
 import kotlinx.coroutines.Dispatchers
 import java.util.*
 
 class MultipleNetworkRequestsViewModel(
-    private val service: ApiService = ApiService.create(errorProbability = 5)
+    private val service: GithubService = GithubService.create(errorProbability = 5)
 ) : ViewModel() {
 
-    private val _viewState = MutableLiveData<ViewState<Model>>()
-    val viewState: LiveData<ViewState<Model>>
+    private val _viewState = MutableLiveData<ViewState<RepositoryDto>>()
+    val viewState: LiveData<ViewState<RepositoryDto>>
         get() = _viewState
 
     init {
@@ -36,7 +36,7 @@ class MultipleNetworkRequestsViewModel(
         IO.fx {
             effect { _viewState.postValue(ViewState.Loading) }.bind()
             val modelList =
-                idList.parTraverse(Dispatchers.IO) { effect { service.getModelDetails(it) } }
+                idList.parTraverse(Dispatchers.IO) { effect { service.getRepositoryDetails(it) } }
                     .fix()
                     .bind()
             ViewState.Content(modelList.first())
@@ -54,7 +54,7 @@ class MultipleNetworkRequestsViewModel(
             effect { _viewState.postValue(ViewState.Loading) }.bind()
             continueOn(Dispatchers.IO)
             val modelList =
-                idList.traverse(IO.applicative()) { effect { service.getModelDetails(it) } }
+                idList.traverse(IO.applicative()) { effect { service.getRepositoryDetails(it) } }
                     .map { it.fix() }
                     .fix()
                     .bind()

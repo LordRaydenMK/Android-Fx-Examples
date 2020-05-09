@@ -9,17 +9,17 @@ import arrow.fx.IO
 import arrow.fx.extensions.fx
 import arrow.fx.handleError
 import arrow.integrations.kotlinx.unsafeRunScoped
-import io.github.lordraydenmk.android_fx.data.ApiService
-import io.github.lordraydenmk.android_fx.data.Model
+import io.github.lordraydenmk.android_fx.data.GithubService
+import io.github.lordraydenmk.android_fx.data.RepositoryDto
 import io.github.lordraydenmk.android_fx.view.ViewState
 import kotlinx.coroutines.Dispatchers
 
 class ConcurrentApiCallsViewModel(
-    private val service: ApiService = ApiService.create(errorProbability = 10)
+    private val service: GithubService = GithubService.create(errorProbability = 10)
 ) : ViewModel() {
 
-    private val _viewState = MutableLiveData<ViewState<Model>>()
-    val viewState: LiveData<ViewState<Model>>
+    private val _viewState = MutableLiveData<ViewState<RepositoryDto>>()
+    val viewState: LiveData<ViewState<RepositoryDto>>
         get() = _viewState
 
     init {
@@ -32,11 +32,11 @@ class ConcurrentApiCallsViewModel(
         // if all of the succeed, we get a Tuple3 (there are 3 requests)
         // if any of them fail, the whole computation (fx-block) short-circuits
         // in case of failure, the rest of the requests are canceled (if possible)
-        val results: Tuple3<Model, Model, Model> = IO.parTupledN(
+        val results: Tuple3<RepositoryDto, RepositoryDto, RepositoryDto> = IO.parTupledN(
             Dispatchers.IO,
-            effect { service.getModel() },
-            effect { service.getModel() },
-            effect { service.getModel() }
+            effect { service.getRepository() },
+            effect { service.getRepository() },
+            effect { service.getRepository() }
         ).bind()
         ViewState.Content(results.b)    // I'm picking the 2nd result because why not
     }
