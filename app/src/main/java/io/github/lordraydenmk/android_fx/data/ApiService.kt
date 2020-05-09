@@ -15,21 +15,22 @@ interface ApiService {
     companion object {
 
         // Fake implementation. Randomly returning errors
-        fun create(errorProbability: Int = 25): ApiService = object : ApiService {
+        fun create(errorProbability: Int = 25, delayMillis: Long = 1500): ApiService =
+            object : ApiService {
 
-            override suspend fun getModel(): Model {
-                delay(2000) // simulate delay
-                val error = Random.nextInt(100)
-                return if (error <= errorProbability) throw IOException("Bang!")
-                else Model(UUID.randomUUID(), "My Model")
-            }
+                override suspend fun getModel(): Model {
+                    delay(delayMillis) // simulate delay
+                    val error = Random.nextInt(100)
+                    return if (error <= errorProbability) throw IOException("Bang!")
+                    else Model(UUID.randomUUID(), "My Model")
+                }
 
-            override suspend fun getModelDetails(uuid: UUID): Model {
-                delay(1000) // simulate delay
-                val error = Random.nextInt(100)
-                return if (error <= errorProbability) throw IOException("Bang!")
-                else Model(uuid, "Model Details")
+                override suspend fun getModelDetails(uuid: UUID): Model {
+                    delay(1000) // simulate delay
+                    val error = Random.nextInt(100)
+                    return if (error <= errorProbability) throw IOException("Bang!")
+                    else Model(uuid, "Model Details")
+                }
             }
-        }
     }
 }
