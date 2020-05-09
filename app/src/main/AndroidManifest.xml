@@ -31,6 +31,8 @@
 
         <activity android:name=".example06.RetryingActivity" />
 
+        <activity android:name=".example07.RetryAndTimeoutActivity" />
+
     </application>
 
 </manifest>

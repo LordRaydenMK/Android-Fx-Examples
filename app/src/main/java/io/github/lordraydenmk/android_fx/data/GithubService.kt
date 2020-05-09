@@ -15,17 +15,17 @@ interface GithubService {
 
     companion object {
 
+        val model = RepositoryDto(
+            UUID.randomUUID(),
+            "arrow-kt/arrow",
+            R.drawable.ic_arrow_core_brand_sidebar,
+            "Functional companion to Kotlin's Standard Library http://arrow-kt.io",
+            42  // Answer to the Ultimate Question of Life, the Universe, and Everything
+        )
+
         // Fake implementation. Randomly returning errors
         fun create(errorProbability: Int = 25, delayMillis: Long = 1500): GithubService =
             object : GithubService {
-
-                val model = RepositoryDto(
-                    UUID.randomUUID(),
-                    "arrow-kt/arrow",
-                    R.drawable.ic_arrow_core_brand_sidebar,
-                    "Functional companion to Kotlin's Standard Library http://arrow-kt.io",
-                    42  // Answer to the Ultimate Question of Life, the Universe, and Everything
-                )
 
                 override suspend fun getRepository(): RepositoryDto {
                     delay(delayMillis) // simulate delay
@@ -44,5 +44,25 @@ interface GithubService {
                     )
                 }
             }
+
+        fun create(responses: List<suspend () -> RepositoryDto>): GithubService =
+
+            object : GithubService {
+
+                var count = 0
+
+                override suspend fun getRepository(): RepositoryDto =
+                    responses[count++]()
+
+                override suspend fun getRepositoryDetails(uuid: UUID): RepositoryDto =
+                    TODO("Not yet implemented")
+            }
+
+        val slowResponseThenErrorThenFast: List<suspend () -> RepositoryDto> =
+            listOf<suspend () -> RepositoryDto>(
+                { delay(1500); model },
+                { delay(500); throw RuntimeException("Bang!") },
+                { delay(500); model }
+            )
     }
 }
