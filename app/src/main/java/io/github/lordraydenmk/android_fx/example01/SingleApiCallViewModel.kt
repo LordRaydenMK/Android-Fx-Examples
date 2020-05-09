@@ -12,6 +12,7 @@ import arrow.integrations.kotlinx.unsafeRunScoped
 import io.github.lordraydenmk.android_fx.data.GithubService
 import io.github.lordraydenmk.android_fx.data.RepositoryDto
 import io.github.lordraydenmk.android_fx.view.ViewState
+import io.github.lordraydenmk.android_fx.view.errorMessage
 import kotlinx.coroutines.Dispatchers
 
 class SingleApiCallViewModel(private val service: GithubService = GithubService.create()) : ViewModel() {
@@ -32,7 +33,7 @@ class SingleApiCallViewModel(private val service: GithubService = GithubService.
             continueOn(Dispatchers.Default)
             ViewState.Content(repositoryDto)
         }
-            .handleError { ViewState.Error(it.message ?: "Ooops") }
+            .handleError { ViewState.Error(it.errorMessage()) }
             .flatMap { effect { _viewState.postValue(it) } }
             .unsafeRunScoped(viewModelScope) {}
     }

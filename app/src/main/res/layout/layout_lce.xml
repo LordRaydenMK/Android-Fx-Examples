@@ -79,6 +79,8 @@
         android:layout_height="wrap_content"
         android:drawableTop="@drawable/ic_error_outline_black_24dp"
         android:drawablePadding="8dp"
+        android:gravity="center_horizontal"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
