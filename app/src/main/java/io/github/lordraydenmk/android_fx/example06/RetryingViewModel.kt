@@ -16,9 +16,10 @@ import io.github.lordraydenmk.android_fx.data.ApiService
 import io.github.lordraydenmk.android_fx.data.Model
 import io.github.lordraydenmk.android_fx.view.ViewState
 import kotlinx.coroutines.Dispatchers
+import timber.log.Timber
 
 class RetryingViewModel(
-    private val service: ApiService = ApiService.create(85)
+    private val service: ApiService = ApiService.create(errorProbability = 85, delayMillis = 300)
 ) : ViewModel() {
 
     private val _viewState = MutableLiveData<ViewState<Model>>()
@@ -33,7 +34,8 @@ class RetryingViewModel(
         IO.fx {
             effect { _viewState.postValue(ViewState.Loading) }.bind()
             continueOn(Dispatchers.IO)
-            val model = effect { service.getModel() }.onError { IO { println(it) } }
+            val model = effect { service.getModel() }
+                .onError { IO { Timber.e(it, "Error calling `getModel`") } }
                 .retry(IO.concurrent(), complexPolicy())
                 .bind()
             ViewState.Content(model)
