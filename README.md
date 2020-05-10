@@ -26,15 +26,15 @@ In Arrow-Fx `IO<A>` is a data type that represents computation that, *when execu
 
 ## Examples
 
-1. [Executing an API call](### Executing an API call])
-2. [Executing sequential API calls](# Executing sequential API calls)
-3. [Concurrent API calls](# Concurrent API calls)
-4. [Executing X API calls (serially or concurrently)](# Executing X API calls (serially or concurrently))
-5. [Executing API calls with timeouts](# Executing API calls with timeouts)
-6. [Retrying API calls](# Retrying API calls)
-7. [A combination of retry and timeout](# A combination of retry and timeout)
-8. [Heavy computations in the background](# Heavy computations in the background)
-9. [Background operation that outlives the screen](# Background operation that outlives the screen)
+1. [Executing an API call](#executing-an-api-call)
+2. [Executing sequential API calls](#executing-sequential-api-calls)
+3. [Concurrent API calls](#concurrent-api-calls)
+4. [Executing X API calls (serially or concurrently)](#executing-x-api-calls-serially-or-concurrently)
+5. [Executing API calls with timeouts](#executing-api-calls-with-timeouts)
+6. [Retrying API calls](#retrying-api-calls)
+7. [A combination of retry and timeout](#a-combination-of-retry-and-timeout)
+8. [Heavy computations in the background](#heavy-computations-in-the-background)
+9. [Background operation that outlives the screen](#background-operation-that-outlives-the-screen)
 
 *Note*: Examples 1-7 are in the same order as the *Kotlin Coroutine Use Cases on Android* project. Examples 8 and 9 exist there with a different number.
 
