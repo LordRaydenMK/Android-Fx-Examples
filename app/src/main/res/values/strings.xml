@@ -8,4 +8,6 @@
     <string name="example05">API call with timeout</string>
     <string name="example06">Retrying on error</string>
     <string name="example07">Retrying plus Timeout</string>
+    <string name="example08">Background computation</string>
+    <string name="example09">Outlive screen</string>
 </resources>

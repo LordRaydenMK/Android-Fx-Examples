@@ -18,21 +18,42 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".example01.SingleApiCallActivity" />
-
-        <activity android:name=".example02.SequentialApiCallsActivity" />
-
-        <activity android:name=".example03.ConcurrentApiCallsActivity" />
-
-        <activity android:name=".example04.MultipleNetworkRequestsActivity" />
-
-        <activity android:name=".example05.RequestWithTimeoutActivity" />
-
-        <activity android:name=".example06.RetryingActivity" />
-
-        <activity android:name=".example07.RetryAndTimeoutActivity" />
-
+        <activity
+            android:name=".example01.SingleApiCallActivity"
+            android:label="@string/example01"
+            android:parentActivityName=".main.MainActivity" />
+        <activity
+            android:name=".example02.SequentialApiCallsActivity"
+            android:label="@string/example02"
+            android:parentActivityName=".main.MainActivity" />
+        <activity
+            android:name=".example03.ConcurrentApiCallsActivity"
+            android:label="@string/example03"
+            android:parentActivityName=".main.MainActivity" />
+        <activity
+            android:name=".example04.MultipleNetworkRequestsActivity"
+            android:label="@string/example04"
+            android:parentActivityName=".main.MainActivity" />
+        <activity
+            android:name=".example05.RequestWithTimeoutActivity"
+            android:label="@string/example05"
+            android:parentActivityName=".main.MainActivity" />
+        <activity
+            android:name=".example06.RetryingActivity"
+            android:label="@string/example06"
+            android:parentActivityName=".main.MainActivity" />
+        <activity
+            android:name=".example07.RetryAndTimeoutActivity"
+            android:label="@string/example07"
+            android:parentActivityName=".main.MainActivity" />
+        <activity
+            android:name=".example08.ComputeInBackgroundActivity"
+            android:label="@string/example08"
+            android:parentActivityName=".main.MainActivity" />
+        <activity
+            android:name=".example09.OutliveScreenActivity"
+            android:label="@string/example09"
+            android:parentActivityName=".main.MainActivity" />
     </application>
 
 </manifest>
