@@ -6,7 +6,7 @@ Solving real world Android problems using Arrow-Fx and functional programming. I
 
 ## Arrow and Arrow-Fx
 
-*[Λrrow]*[arrow] is a family of libraries for Typed Functional Programming in Kotlin. In arrow-core we can find data types like `Option` or `Either` that can helps us represent the absence of value and errors respectively. However to do something useful on Android we usually need to talk to our backend, update the UI, update a local database etc. This is where [Arrow-Fx][arrow-fx] comes into play. From the website:
+[Λrrow][arrow] is a family of libraries for Typed Functional Programming in Kotlin. In arrow-core we can find data types like `Option` or `Either` that can helps us represent the absence of value and errors respectively. However to do something useful on Android we usually need to talk to our backend, update the UI, update a local database etc. This is where [Arrow-Fx][arrow-fx] comes into play. From the website:
 
 > Arrow Fx is a next-generation Typed FP Effects Library that makes effectful and polymorphic programming first class in Kotlin, and acts as an extension to the Kotlin native suspend system.
 > The library brings purity, referential transparency, and direct imperative syntax to typed FP in Kotlin, and is a fun and easy tool for creating Typed Pure Functional Programs. 
@@ -26,7 +26,7 @@ In Arrow-Fx `IO<A>` is a data type that represents computation that, *when execu
 
 ## Examples
 
-1. [Executing an API call](# Executing an API call])
+1. [Executing an API call](### Executing an API call])
 2. [Executing sequential API calls](# Executing sequential API calls)
 3. [Concurrent API calls](# Concurrent API calls)
 4. [Executing X API calls (serially or concurrently)](# Executing X API calls (serially or concurrently))
