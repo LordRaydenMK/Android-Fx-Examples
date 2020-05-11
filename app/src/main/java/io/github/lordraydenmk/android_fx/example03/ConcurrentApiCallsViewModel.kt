@@ -31,7 +31,7 @@ class ConcurrentApiCallsViewModel(
     fun execute() = IO.fx {
         effect { _viewState.postValue(ViewState.Loading) }.bind()
         // performs the requests concurrently
-        // if all of the succeed, we get a Tuple3 (there are 3 requests)
+        // if all of them succeed, we get a Tuple3 (there are 3 requests)
         // if any of them fail, the whole computation (fx-block) short-circuits
         // in case of failure, the rest of the requests are canceled (if possible)
         val results: Tuple3<RepositoryDto, RepositoryDto, RepositoryDto> = IO.parTupledN(
