@@ -75,25 +75,31 @@ Note: In case of API calls with Retroift, the Timeout support from OkHttp is pro
     
 ### Retrying API calls
 
-TODO()
+API calls can fail, network can be slow or unstable, the server can be down. To ensure good user experience we can retry the calls.
+
+This is where FP really shines. Arrow-Fx comes with the [Schedule][schedule] data type that can be used to define policies for retrying or repeating requests. The definition of the retry policy is separate from the operation being executed, and each policy can be further combined with other policies. I can use `Schedule.spaced(60.seconds)` for a spaced schedule with a value of 60 seconds. I can use `Schedule.recurs(100)` to repeat immediately up to 100 times. I can compose those two schedules into one that repeats with 60s delay up to 100 times using the `and` operator like this: `Schedule.spaced<A>(60.seconds) and Schedule.recurs(100)`. The `and` operator combines two schedules, continues only when both continue and chooses the maximum delay.
+
+Once the schedule is defined any IO value can be retried using `io.retry(IO.concurrent(), mySchedule)`. Another area where FP shines is it goes beyond languages and frameworks. Arrow's schedule is a port of [ZIO Schedule][zio-schedule] from Scala and I recommend [this talk][zio-schedule-youtube] about it.
+
+This sample contains two different schedules, a simple exponential one and one more complex that includes exponential backoff, then spaced and the whole thing has a bit of randomness added.
 
 [Check the code here][ex-06]
 
 ### A combination of retry and timeout
 
-TODO()
+A call to `waitFor` provides the timeout, then call `retry` with a schedule to supply a retrying mechanism. 
 
 [Check the code here][ex-07]
 
 ### Heavy computations in the background
 
-TODO()
+Offloading a heavy computation in the background is similar to doing a I/O operation in the background, the difference is passing different `Dispatcher`. For computations we can use `continueOn(Dispatchers.Default)`. Note: Arrow-Fx works both with the dispatchers from KotlinX coroutines and it's own dispatchers. Find out more [here][io-dispatchers].
 
 [Check the code here][ex-08]
 
 ### Background operation that outlives the screen
 
-TODO()
+Running an `IO` using the coroutines integration means that the IO will be canceled once the `ViewMode.onCleared` is called. Sometimes we don't want to do that. To achieve that we can call `fork()` on our `IO` operation and ignore the tokens for join and cancel (the return values from `fork`). By doing that, that IO operation will run in a separate Fiber and it won't be canceled if/when the main IO is canceled. Note: in case the IO fails we also don't get notified. 
 
 [Check the code here][ex-09]
 
@@ -105,7 +111,7 @@ This repo is still a WIP. If you have an idea to improve some example feel free 
 
 - [LukasLechnerDev](https://github.com/LukasLechnerDev) for writing Kotlin-Coroutine-Use-Cases-on-Android which inspired this project
 - The [Arrow contributors](https://github.com/arrow-kt/arrow/graphs/contributors) for writing an amazing library that makes writing FP programs with Kotlin possible
-- [47 Degrees](https://www.47deg.com/) for sponsoring the project
+- [47 Degrees](https://www.47deg.com/) for sponsoring Λrrow
 
 
 [coroutines-android]: https://github.com/LukasLechnerDev/Kotlin-Coroutine-Use-Cases-on-Android
@@ -117,7 +123,12 @@ This repo is still a WIP. If you have an idea to improve some example feel free 
 [ex-03]: /app/src/main/java/io/github/lordraydenmk/android_fx/example03/ConcurrentApiCallsViewModel.kt
 [ex-04]: /app/src/main/java/io/github/lordraydenmk/android_fx/example04/MultipleNetworkRequestsViewModel.kt
 [ex-05]: /app/src/main/java/io/github/lordraydenmk/android_fx/example05/RequestWithTimeoutViewModel.kt
+[schedule]: https://arrow-kt.io/docs/0.10/apidocs/arrow-fx/arrow.fx/-schedule/
+[zio-schedule]: https://zio.dev/docs/datatypes/datatypes_schedule
+[zio-schedule-youtube]: https://www.youtube.com/watch?v=onQSHiafAY8
 [ex-06]: /app/src/main/java/io/github/lordraydenmk/android_fx/example06/RetryingViewModel.kt
 [ex-07]: /app/src/main/java/io/github/lordraydenmk/android_fx/example07/RetryAndTimeoutViewModel.kt
+[io-dispatchers]: https://stackoverflow.com/questions/61711204/io-dispatchers-vs-kotlinx-dispatchers-inside-an-fx-block
 [ex-08]: /app/src/main/java/io/github/lordraydenmk/android_fx/example08/ComputeInBackgroundViewModel.kt
+[ex-09]: /app/src/main/java/io/github/lordraydenmk/android_fx/example09/OutliveScreenViewModel.kt
 [so-arrow]: https://stackoverflow.com/questions/tagged/arrow-kt
