@@ -105,7 +105,7 @@ This repo is still a WIP. If you have an idea to improve some example feel free 
 
 - [LukasLechnerDev](https://github.com/LukasLechnerDev) for writing Kotlin-Coroutine-Use-Cases-on-Android which inspired this project
 - The [Arrow contributors](https://github.com/arrow-kt/arrow/graphs/contributors) for writing an amazing library that makes writing FP programs with Kotlin possible
-- [47 Degrees](https://www.47deg.com/) for sponsoring the project
+- [47 Degrees](https://www.47deg.com/) for sponsoring Λrrow
 
 
 [coroutines-android]: https://github.com/LukasLechnerDev/Kotlin-Coroutine-Use-Cases-on-Android
@@ -120,4 +120,5 @@ This repo is still a WIP. If you have an idea to improve some example feel free 
 [ex-06]: /app/src/main/java/io/github/lordraydenmk/android_fx/example06/RetryingViewModel.kt
 [ex-07]: /app/src/main/java/io/github/lordraydenmk/android_fx/example07/RetryAndTimeoutViewModel.kt
 [ex-08]: /app/src/main/java/io/github/lordraydenmk/android_fx/example08/ComputeInBackgroundViewModel.kt
+[ex-09]: /app/src/main/java/io/github/lordraydenmk/android_fx/example09/OutliveScreenViewModel.kt
 [so-arrow]: https://stackoverflow.com/questions/tagged/arrow-kt
