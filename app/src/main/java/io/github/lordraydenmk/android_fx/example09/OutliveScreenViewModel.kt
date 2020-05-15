@@ -44,7 +44,7 @@ class OutliveScreenViewModel(
         IO.fx {
             effect { _viewState.postValue(ViewState.Loading) }.bind()
             continueOn(Dispatchers.Default)
-            backgroundTask.fork()
+            val (kind, kind1) = backgroundTask.fork()
                 .bind()    // the cancellation token is ignored, we can never cancel this or get the result
             ViewState.Content(GithubService.model) // show static data
         }
