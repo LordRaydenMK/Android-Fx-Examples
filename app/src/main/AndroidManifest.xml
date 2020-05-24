@@ -10,7 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".example10.CachingActivity"></activity>
+
         <activity android:name=".main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -53,6 +53,10 @@
         <activity
             android:name=".example09.OutliveScreenActivity"
             android:label="@string/example09"
+            android:parentActivityName=".main.MainActivity" />
+        <activity
+            android:name=".example10.CachingActivity"
+            android:label="@string/example10"
             android:parentActivityName=".main.MainActivity" />
     </application>
 
