@@ -14,6 +14,7 @@ import io.github.lordraydenmk.android_fx.example06.RetryingActivity
 import io.github.lordraydenmk.android_fx.example07.RetryAndTimeoutActivity
 import io.github.lordraydenmk.android_fx.example08.ComputeInBackgroundActivity
 import io.github.lordraydenmk.android_fx.example09.OutliveScreenActivity
+import io.github.lordraydenmk.android_fx.example10.CachingActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 data class ArrowAndroidExample(
@@ -30,7 +31,8 @@ val allExamples = listOf(
     ArrowAndroidExample(R.string.example06, RetryingActivity::class.java),
     ArrowAndroidExample(R.string.example07, RetryAndTimeoutActivity::class.java),
     ArrowAndroidExample(R.string.example08, ComputeInBackgroundActivity::class.java),
-    ArrowAndroidExample(R.string.example09, OutliveScreenActivity::class.java)
+    ArrowAndroidExample(R.string.example09, OutliveScreenActivity::class.java),
+    ArrowAndroidExample(R.string.example10, CachingActivity::class.java)
 )
 
 class MainActivity : AppCompatActivity() {
