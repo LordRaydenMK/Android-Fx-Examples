@@ -54,6 +54,10 @@
             android:name=".example09.OutliveScreenActivity"
             android:label="@string/example09"
             android:parentActivityName=".main.MainActivity" />
+        <activity
+            android:name=".example10.CachingActivity"
+            android:label="@string/example10"
+            android:parentActivityName=".main.MainActivity" />
     </application>
 
 </manifest>

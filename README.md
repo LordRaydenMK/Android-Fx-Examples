@@ -39,6 +39,7 @@ In Arrow-Fx `IO<A>` is a data type that represents computation that, *when execu
 7. [A combination of retry and timeout](#a-combination-of-retry-and-timeout)
 8. [Heavy computations in the background](#heavy-computations-in-the-background)
 9. [Background operation that outlives the screen](#background-operation-that-outlives-the-screen)
+10. [In memory data caching](#in-memory-data-caching)
 
 *Note*: Examples 1-7 are in the same order as the *Kotlin Coroutine Use Cases on Android* project. Examples 8 and 9 exist there with a different number.
 
@@ -106,6 +107,12 @@ Offloading a heavy computation in the background is similar to doing a I/O opera
 Running an `IO` using the coroutines integration means that the IO will be canceled once the `ViewMode.onCleared` is called. Sometimes we don't want to do that. To achieve that we can call `fork()` on our `IO` operation and ignore the tokens for join and cancel (the return values from `fork`). By doing that, that IO operation will run in a separate Fiber and it won't be canceled if/when the main IO is canceled. Note: in case the IO fails we also don't get notified. 
 
 [Check the code here][ex-09]
+
+### In memory data caching
+
+The first time you open the screen, the data will come from the service and be stored in an In Memory cache. The second time the screen is opened the data comes instantly from the cache. There is a button to clear the cache and the next time the screen is opened it will fetch from the service.
+
+The cache implementation use the `Ref` data type that provides a safe concurrent access and modification of it's state. Access and modification is done using `IO`. The tests use a fake implementation that return a user specified value.
 
 ## Contributing
 

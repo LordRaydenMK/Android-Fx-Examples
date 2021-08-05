@@ -10,4 +10,6 @@
     <string name="example07">Retrying plus Timeout</string>
     <string name="example08">Background computation</string>
     <string name="example09">Outlive screen</string>
+    <string name="example10">Cache data in memory</string>
+    <string name="clear_cache">Clear cache</string>
 </resources>
