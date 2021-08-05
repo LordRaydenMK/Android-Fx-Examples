@@ -1,8 +1,12 @@
-# Android <3 Arrow-Fx
+# [DEPRECATED] Android <3 Arrow-Fx
 
 ![Android Pull Request & Master CI](https://github.com/LordRaydenMK/Android-Fx/workflows/Android%20Pull%20Request%20&%20Master%20CI/badge.svg)
 
 Solving real world Android problems using Arrow-Fx and functional programming. Inspired by the awesome [Kotlin Coroutine Use Cases on Android][coroutines-android].
+
+## DEPRECATION
+
+This repository uses Arrow 0.10.5. The current active version (0.13.X) no longer include the IO datatype. See https://www.47deg.com/blog/arrow-0.13.0-release/
 
 ## Arrow and Arrow-Fx
 
